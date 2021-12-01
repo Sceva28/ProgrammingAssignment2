@@ -2,33 +2,39 @@
 ## functions do
 
 ## Write a short comment describing this function
+## library mass is used to calculate inverse for squared and non squared matrices 
 library(MASS)
 makeCacheMatrix <- function(x = matrix()) {
-  inv <- NULL
+  inv <- NULL         ##initializing inverse as null
   set<- function(y){
                     x<<-y
                     inv<<-NULL
   }
-  get<-function()x
+  get<-function()x ## function to get matrix x
   setinv<-function(inverse)inv<<-inverse
   getinv<-function(){
-        inver<-ginv(x)
-        inver%*%x
+        inver<-ginv(x) 
+        inver%*%x  ## function to obtain inverse of the matrix
   }
   list(set = set, get = get,
        setinv = setinv, getinv = getinv)
 }
 
-cachesolve <- function(x, ...){
+    ##function for capturing cache data
+
+cachesolve <- function(x, ...)  ## gets cache data 
+    {
   inv<-x$getinv()
-  if(!is.null(inv)){
-    message("getting cached data")
-    return(inv)
+  if(!is.null(inv)) ##checking whether inverse is null
+    
+    {
+    message("getting cached data!!")
+    return(inv) ## returns inverse value
   }
   data <- x$get()
-  inv<-solve(data...)
+  inv<-solve(data...) ## calculates inverse value
   x$setinv(inv)
-  inv
+  inv ## returns a matrix which is the inverse of 'x'
 }
 
 
